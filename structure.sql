@@ -10,15 +10,15 @@ CREATE TABLE users(
 	lastname VARCHAR(100) NOT NULL,
 	email VARCHAR(100) NOT NULL UNIQUE,
 	password VARCHAR(100) NOT NULL,
-	id_role INT,
-	FOREIGN KEY (id_role) REFERENCES roles(id));
+	id_role INT NOT NULL,
+	FOREIGN KEY (id_role) REFERENCES roles(id)) ON DELETE RESTRICT;
 CREATE TABLE courses(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	title VARCHAR(100) NOT NULL UNIQUE,
 	description VARCHAR(255),
 	total_hours DECIMAL(6,2),
 	id_prof INT,
-	FOREIGN KEY (id_prof) REFERENCES users(id));
+	FOREIGN KEY (id_prof) REFERENCES users(id)) ON DELETE RESTRICT;
 CREATE TABLE classes(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	name VARCHAR(100) NOT NULL,
@@ -29,13 +29,13 @@ CREATE TABLE students(
 	student_number INT UNIQUE,
 	id_classe INT,
 	id_user INT,
-	FOREIGN KEY (id_classe) REFERENCES classes(id),
-	FOREIGN KEY (id_user) REFERENCES users(id));
+	FOREIGN KEY (id_classe) REFERENCES classes(id) ON DELETE RESTRICT,
+	FOREIGN KEY (id_user) REFERENCES users(id)) ON DELETE SET NULL;
 CREATE TABLE enrollments(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	enrolled_at DATE NOT NULL,
 	status VARCHAR(100) NOT NULL,
 	id_student INT NOT NULL,
 	id_course INT NOT NULL,
-	FOREIGN KEY (id_student) REFERENCES students(id),
-    FOREIGN KEY (id_course) REFERENCES courses(id))
+	FOREIGN KEY (id_student) REFERENCES students(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_course) REFERENCES courses(id)) ON DELETE CASCADE;
