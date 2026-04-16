@@ -49,5 +49,5 @@ UNIQUE (student_id, course_id)
 - **Git & GitHub** : versioning et gestion du projet
 ## 5️⃣ ERD Diagram
 Le diagramme ERD représente visuellement la structure de la base de données ainsi que les relations entre les tables.
-
+[Mon diagramme ERD]([https://lucidchart.com/your-link](https://lucid.app/lucidchart/68020842-1788-462e-b541-12b5038e54ff/edit?viewport_loc=198%2C-66%2C1586%2C689%2C0_0&invitationId=inv_05b2297b-9051-4144-9561-fe82561686fa))
 ![image alt](https://github.com/badrbelabrik/School-Management-System/blob/3caf4a49834a96db0b9d9135ab3a3f521fd123aa/erd-diagram.png)
