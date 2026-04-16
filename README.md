@@ -50,4 +50,4 @@ UNIQUE (student_id, course_id)
 ## 5️⃣ ERD Diagram
 Le diagramme ERD représente visuellement la structure de la base de données ainsi que les relations entre les tables.
 
-![App Screenshot](https://prnt.sc/T8hEQogq1MHw)
+![image alt](https://github.com/badrbelabrik/School-Management-System/blob/3caf4a49834a96db0b9d9135ab3a3f521fd123aa/erd-diagram.png)
