@@ -195,36 +195,32 @@ WHERE date_embauche > '2023-01-01';
 SELECT * FROM prestations
 WHERE prix BETWEEN 20 AND 50
 ORDER BY prix ASC;
--- 4
+
 SELECT c.nom,coif.nom,rdv.date_heure FROM rendezvous rdv
 JOIN coiffeurs coif ON coif.id = rdv.id_coiffeur
 JOIN clients c ON c.id = rdv.id_client
-WHERE DATE(rdv.date_heure) = CURDATE();
--- 5
+WHERE CAST(rdv.date_heure AS date) = CURDATE();
+
 SELECT sal.id,sal.nom, COUNT(*) AS total_coifs FROM salons sal
-LEFT JOIN coiffeurs coif ON coif.id_salon = sal.id
+JOIN coiffeurs coif ON coif.id_salon = sal.id
 GROUP BY sal.id;
--- 6
+
 SELECT c.id,c.nom,c.prenom FROM clients c
 WHERE c.email IS NOT NULL;
--- 7
-SELECT sal.id,sal.nom, SUM(prix_paye) AS montant_total
-FROM salons sal
+
+SELECT sal.id,sal.nom, SUM(rdv_prest.prix_paye) AS montant_total FROM salons sal
 JOIN coiffeurs coif ON coif.id_salon = sal.id
 JOIN rendezvous rdv ON rdv.id_coiffeur = coif.id
 JOIN rdv_prest ON rdv_prest.id_rdv = rdv.id
-GROUP BY sal.id,sal.nom
-;
+GROUP BY sal.id,sal.nom;
 
--- 8
-SELECT coif.id,coif.nom,pres.nom prestation, COUNT(*) AS total_prest FROM coiffeurs coif
+SELECT coif.id,coif.nom,pres.nom, COUNT(*) AS total_prest FROM coiffeurs coif
 JOIN rendezvous rdv ON rdv.id_coiffeur = coif.id
 JOIN rdv_prest ON rdv_prest.id_rdv = rdv.id
 JOIN prestations pres ON pres.id = rdv_prest.id_prestation
 WHERE pres.nom = 'Coloration'
-GROUP BY coif.id
-HAVING total_prest > 10;
--- 9
+GROUP BY coif.id;
+
 SELECT sal.id,sal.nom, SUM(rdv_prest.prix_paye) AS montant_total FROM salons sal
 JOIN coiffeurs coif ON coif.id_salon = sal.id
 JOIN rendezvous rdv ON rdv.id_coiffeur = coif.id
@@ -232,15 +228,13 @@ JOIN rdv_prest ON rdv_prest.id_rdv = rdv.id
 GROUP BY sal.id,sal.nom
 ORDER BY montant_total DESC
 LIMIT 1;
--- 10
+
 SELECT pres.nom,rdv_prest.prix_paye FROM rdv_prest
 RIGHT JOIN prestations pres ON pres.id = rdv_prest.id_prestation
 GROUP BY pres.nom
 HAVING prix_paye IS NULL;
--- 11
-SELECT coif.nom, AVG(prix_paye) AS moy_coif, COUNT(rdv.id) as total_rdv FROM coiffeurs coif
+
+SELECT coif.nom, AVG(prix_paye) AS moy_coif, COUNT(rdv.id) FROM coiffeurs coif
 JOIN rendezvous rdv ON rdv.id_coiffeur = coif.id
 JOIN rdv_prest ON rdv_prest.id_rdv = rdv.id
 GROUP BY coif.nom;
-
-
